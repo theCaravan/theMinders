@@ -1,139 +1,103 @@
+version = "PRE-ALPHA Build 5"
+print("The Minders -- by The Caravan -- " + version)
 from datetime import *
 from time import *
 
-def getRemindersFromFile(location=""):
-        read_into = open(location, "r")
+categories = ["Big Projects", "Chores", "Islam", "Studying",
+              "Important", "Planning"]
 
-        done_reading = False
-        flags = ""
-        categories = []
-        reminder_parts = []
-        reminders = []
-        
-        while not done_reading:
-            nxt_line = read_into.readline()
+reminder_parts = ["Done", "Category", "Name", "Occurrance",
+                  "Date Assigned", "Due Date", "Submission Method",
+                  "Additional Notes"]
 
-            if flags != "":
-                if flags == "C":
-                   categories = nxt_line.split(" , ")
+reminders = [
+                ["No", "0", "Physics Lab Report", "NULL", "2016,4,1",
+                  "2016,4,8,16,0,0", "Paper", "Turn in Williamson Hall 150"],
 
-                elif flags == "P":                   
-                   reminder_parts = nxt_line.split(" , ")
-                   flags = "R"
-                   continue
+                ["No", "0", "Arch Lab", "NULL", "2016,3,28", "2016,4,13,11,55,0",
+                 "Moodle", "See Num 8 Page 12"]
+            ]
 
-                elif flags == "R":
-                   if nxt_line != "-END-OF-REMINDERS-\n":
-                       reminders.append(nxt_line.split(" , "))
-                       flags = "R"
-                       continue
-                           
-                elif flags == "EOF":
-                   if nxt_line == "":
-                        output = []
-                        output.append(categories)
-                        output.append(reminder_parts)
-                        output.append(reminders)
-                       
-                        return output
-                
-                flags = ""
-                continue
 
-                
-            elif nxt_line != "":
-                if nxt_line == "Categories:\n":
-                    flags = "C"
-                    continue
-
-                elif nxt_line == "Reminders:\n":
-                    flags = "P"
-                    continue
-                
-            else:
-                flags = "EOF"
-                continue
-
-def printLine(length=0, character=""):
+def printLine(length=0, character="", lineBreakAtEnd=True):
     count = 1
     while count < length:
         print(character, end="")
         count += 1
 
-##def padding(array=[], padding=""):
-##    len_line = len(padding.lstrip("")) - 1
-##    print(padding.lstrip(), end="")
-##    for arr in array:
-##        arr = arr.replace("\n", "")
-##        len_line += len(arr) + len(padding)
-##        print(arr, end=padding)
-##    print()
-##    return len_line
+    if lineBreakAtEnd == True:
+        print()
 
-print("The time is: " + str(localtime()[3]) + ":" + str(localtime()[4]))
+def secondsToDateTime(timeDelta=0.0):
 
-into = getRemindersFromFile("/home/sb5060tx/Documents/myPrograms/Caravan Projects/Reminders.txt")
+##    year = timeDelta /     
 
-categories = into[0]
-reminder_parts = into[1]
-reminders = into[2]
-len_line = 3
-
-print("\nYou have " + str(len(reminders)) + " reminders: \n")
-
-due_today = []
-
-for reminder in reminders:
-    if reminder[5].isalpha() != True:
-        deadline = (reminder[5].replace(":", "-")).replace(" ","-").split("-")
-
-        ## You have the deadline as an array, now compare it with localtime[] so as to determine which deserves more priority
+    x = datetime.now()
+    y = datetime.now()
     
-    else:
-        deadline = reminder[5]
-        ## Presets:
-        ##          1- Salah Time
-        ##          2- Arrival to XXX Location
-        ##          3- Before Bed and After Bed
+    print(x)
+    print((x - y).total_seconds())
+    print(timeDelta)
+
+    return timeDelta
+
+while True:
+    print("\nToday is " + str(date.today().month) + "/" + str(date.today().day) + "/" + str(date.today().year))
+    print("\nThe time is: " + str(datetime.now().hour) + ":" + str(datetime.now().minute))
+
+##    printLine(88, "-", True)
+    
+    len_line = 3
+
+    print("\nYou have " + str(len(reminders)) + " reminders: \n")
+
+    due_sort = []
+
+    for reminder in reminders:
+        if reminder[5].isalpha() != True:
+            deadline = (reminder[5]).split(",")
+            for part in deadline:
+                deadline[deadline.index(part)] = int(part)
+            
+            deadline = datetime(deadline[0], deadline[1], deadline[2], deadline[3], deadline[4], deadline[5])
+
+            delta = secondsToDateTime((deadline - datetime.now()).total_seconds())
+            
+            if delta < 0:
+                print("WARNING: Deadline for this has passed")
+
+            else:
+                due_sort.append(reminder)
+                
+                if delta > 0 and delta < 86400:
+                    print("This is due in 24 hours!!")
+
+##                else:
+                    
         
+        else:
+            deadline = reminder[5]
+            ## Presets:
+            ##          1- Salah Time
+            ##          2- Arrival to XXX Location
+            ##          3- Before Bed and After Bed 
+        
+    while True:
+        cmd = input("\nREMINDERS >>> ")
 
-'''
-Sort it so as to say like this, even on two or more columns if possible:
+        if cmd in ["New", "new", "n", "N"]:
+            newReminder = []
+            for reminder_part in reminder_parts:
+                newReminder.append(input("\t" + str(reminder_part) + ": "))
 
+        elif cmd in ["Exit", "exit", "X", "x"]:
+            if input("Are you sure you want to exit? (Y/n): ") != "n":
+                exit(0)
+                
+        elif cmd in ["", " "]:
+            continue
+                
+        else:
+            print("Cannot determine what '" + cmd + "' means")
 
-SALAH
-
-
-DUE TODAY:
-    ----------- XXX time LEFT
-    -----------
-    -----------
-
-DUE THIS WEEK
-    ----------- Due in X Days (XXX time)
-    -----------
-
-DUE NEXT WEEK
-    -----------
-    -----------
-
-HOUSEHOLD CHORES
-
-
-
-
-    
->>> New Reminder
->>> Done NAME
->>> Postpone NAME to DATE at TIME
->>> Move up NAME to DATE at TIME
->>> Change priority NAME to PRIORITY
->>> Delete NAME
->>> Add Note NAME = fjdskfldajslajgdsjlajgldgljflgjflgjlalj
->>> Exit    
->>> Open FILE    
-
-''' 
-
-
-cmd = input("REMINDERS >>> ")
+    input("PAUSE")
