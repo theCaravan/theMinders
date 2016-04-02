@@ -32,14 +32,24 @@ REMINDERS:
 
 Like Python, this is an interface, so typing certain commands does certain things.
 List of intended commands:
+
 New                             Creates new reminder. Make sure to list what categories to add it to
+
 Delete NAME
+
 Done NAME                       Sets Done Category to "Yes"
+
 notDone NAME                    Sets Done Category to "No" 
+
 Postpone NAME to DATE at TIME   Changes Deadline Category 
+
 Move up NAME to DATE at TIME    Changes Deadline Category
+
 Change priority NAME to ---     Changes Priority category (i.e. "College" to "Important")
+
 Add Note NAME = ---             Adds Additional Notes for this reminder
+
 Exit                            exit()
+
 Open FILE                       open(LOCATION,"r")    Opens new reminders file for reading
 
