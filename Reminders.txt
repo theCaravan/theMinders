@@ -1,0 +1,14 @@
+Categories:
+Big Projects , Chores , Islam , Studying , Important , Planning
+
+Reminders:
+Done , Category , Name , Occurrance , Date Assigned , Due Date , Submission Method , Additional Notes
+No , 0 , Physics Lab Report , NULL , 2016-04-01 , 2016-04-08 16:00:00 , Paper , Turn in Williamson Hall 150
+No , 0 , Arch Lab , NULL , 2016-03-28 , 2016-04-13 11:55:00 , Moodle , See Num 8 Page 12
+No , 0 , Assignment 3 , NULL , Assigned Unknown , 2016-04-11 12:20:00 , Paper , Turn in Lecture
+No , 1 , Jali Upstairs , Daily , NULL , ArriveHome , NULL , Must be done after Food Upstairs and After Coming Home
+No , 1 , Jali Downstairs , Daily , NULL , BeforeBed , NULL , NULL
+No , 2 , Fajr , Daily at Fajr , Fajr , Shuruq , NULL , NULL
+No , 2 , Dhuhr , Daily at Dhuhr , Dhuhr , Asr , NULL , NULL
+No , 2 , Asr , Daily at Asr , Asr , Maghrib , NULL , NULL
+-END-OF-REMINDERS-
