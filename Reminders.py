@@ -1,4 +1,4 @@
-version = "PRE-ALPHA Build 5"
+version = "PRE-ALPHA Build 9"
 print("The Minders -- by The Caravan -- " + version)
 from datetime import *
 from time import *
@@ -21,31 +21,35 @@ reminders = [
 
 def printLine(length=0, character="", lineBreakAtEnd=True):
     count = 1
+    pr = ""
     while count < length:
-        print(character, end="")
+        pr += character
         count += 1
 
     if lineBreakAtEnd == True:
-        print()
+        print(pr+"\n")
+
+    else:
+        print(pr)
 
 def secondsToDateTime(timeDelta=0.0):
 
-##    year = timeDelta /     
+    delta = (timeDelta - datetime.now()).total_seconds()
 
-    x = datetime.now()
-    y = datetime.now()
-    
-    print(x)
-    print((x - y).total_seconds())
-    print(timeDelta)
+    yr = delta / (86400*365.25)
+    mn = (yr - int(yr)) * 12
+    dy = (mn - int(mn)) * 30.4375
+    hr = (dy - int(dy)) * 24
+    mi = (hr - int(hr)) * 60
+    sc = (mi - int(mi)) * 60
 
-    return timeDelta
+    return datetime(int(yr), int(mn), int(dy), int(hr), int(mi), int(sc))
 
 while True:
     print("\nToday is " + str(date.today().month) + "/" + str(date.today().day) + "/" + str(date.today().year))
     print("\nThe time is: " + str(datetime.now().hour) + ":" + str(datetime.now().minute))
 
-##    printLine(88, "-", True)
+    printLine(88, "-", True)
     
     len_line = 3
 
@@ -65,14 +69,9 @@ while True:
             
             if delta < 0:
                 print("WARNING: Deadline for this has passed")
-
-            else:
                 due_sort.append(reminder)
-                
-                if delta > 0 and delta < 86400:
-                    print("This is due in 24 hours!!")
 
-##                else:
+                
                     
         
         else:
